@@ -35,7 +35,7 @@ fn main() -> Result<()> {
         .unwrap_or_else(|| PathBuf::from(&home));
 
     eprintln!("cd {}", work_dir.display());
-    eprintln!("Resuming {}…", &sel.id[..8.min(sel.id.len())]);
+    eprintln!("Resuming {}…", sel.id.chars().take(8).collect::<String>());
 
     std::env::set_current_dir(&work_dir)?;
 

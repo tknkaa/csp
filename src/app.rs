@@ -26,7 +26,8 @@ impl App {
     }
 
     pub fn selected(&self) -> &Session {
-        &self.sessions[self.page * PAGE_SIZE + self.cursor]
+        let idx = (self.page * PAGE_SIZE + self.cursor).min(self.sessions.len().saturating_sub(1));
+        &self.sessions[idx]
     }
 
     pub fn move_up(&mut self) {

@@ -22,14 +22,14 @@ pub fn run_tui(sessions: Vec<Session>) -> Result<Option<Selected>> {
     let mut terminal = Terminal::new(backend)?;
     let mut app = App::new(sessions);
 
-    let result = loop {
+    let result: Result<Option<Selected>, anyhow::Error> = (|| loop {
         terminal.draw(|f| ui(f, &app))?;
 
         if let Event::Key(key) = event::read()? {
             match (key.code, key.modifiers) {
                 (KeyCode::Char('q'), _)
                 | (KeyCode::Esc, _)
-                | (KeyCode::Char('c'), KeyModifiers::CONTROL) => break None,
+                | (KeyCode::Char('c'), KeyModifiers::CONTROL) => break Ok(None),
 
                 (KeyCode::Up | KeyCode::Char('k'), _) => app.move_up(),
                 (KeyCode::Down | KeyCode::Char('j'), _) => app.move_down(),
@@ -38,23 +38,24 @@ pub fn run_tui(sessions: Vec<Session>) -> Result<Option<Selected>> {
 
                 (KeyCode::Enter, _) => {
                     let s = app.selected();
-                    break Some(Selected {
+                    break Ok(Some(Selected {
                         id: s.id.clone(),
                         cwd: s.cwd.clone(),
-                    });
+                    }));
                 }
                 _ => {}
             }
         }
-    };
+    })();
 
-    disable_raw_mode()?;
-    execute!(
+    // Always restore terminal, even if an error occurred above.
+    let _ = disable_raw_mode();
+    let _ = execute!(
         terminal.backend_mut(),
         LeaveAlternateScreen,
         DisableMouseCapture
-    )?;
-    terminal.show_cursor()?;
+    );
+    let _ = terminal.show_cursor();
 
-    Ok(result)
+    Ok(result?)
 }
