@@ -1,11 +1,11 @@
 [package]
-name = "rcs"
+name = "csp"
 version = "0.1.0"
 edition = "2021"
 description = "TUI session picker for GitHub Copilot CLI"
 
 [[bin]]
-name = "rcs"
+name = "csp"
 path = "src/main.rs"
 
 [profile.release]
