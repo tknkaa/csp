@@ -2,7 +2,7 @@
 
 > A fast terminal UI for browsing and resuming GitHub Copilot CLI sessions.
 
-<video src="demo.mp4" controls autoplay loop muted width="800"></video>
+![demo](demo.gif)
 
 ---
 
