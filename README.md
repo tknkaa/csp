@@ -16,7 +16,7 @@
 ## Installation
 
 ```sh
-cargo install --path .
+cargo install --git https://github.com/tknkaa/csp
 ```
 
 The `csp` binary will be available in your `$PATH` via `~/.cargo/bin`.
@@ -39,15 +39,6 @@ csp reads sessions from `~/.copilot/session-state/` automatically.
 | `→` / `l` | Next page |
 | `Enter` | Resume selected session |
 | `q` / `Esc` | Quit |
-
-## Build from source
-
-```sh
-git clone https://github.com/yourname/csp
-cd csp
-cargo build --release
-./target/release/csp
-```
 
 ## License
 
