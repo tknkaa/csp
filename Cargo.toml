@@ -1,0 +1,20 @@
+[package]
+name = "rcs"
+version = "0.1.0"
+edition = "2021"
+description = "TUI session picker for GitHub Copilot CLI"
+
+[[bin]]
+name = "rcs"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = "z"
+strip = true
+
+[dependencies]
+serde_json = "1"
+chrono = "0.4"
+anyhow = "1"
+ratatui = "0.29"
+crossterm = "0.28"
